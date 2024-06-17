@@ -10,7 +10,35 @@ FetchContent_Declare(SFML
         GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp)
+add_executable(main src/main.cpp
+        src/models/headers/Game.h
+        src/models/Game.cpp
+        src/models/Entity.cpp
+        src/models/headers/Entity.h
+        src/models/Spaceship.cpp
+        src/models/headers/Spaceship.h
+        src/models/AllySpaceship.cpp
+        src/models/headers/AllySpaceship.h
+        src/models/EnemySpaceship.cpp
+        src/models/headers/EnemySpaceship.h
+        src/models/Player.cpp
+        src/models/headers/Player.h
+        src/models/Record.cpp
+        src/models/headers/Record.h
+        src/models/EnemySpaceshipSquadron.cpp
+        src/models/headers/EnemySpaceshipSquadron.h
+        src/models/WindowState.cpp
+        src/models/headers/WindowState.h
+        src/models/IntroWindowState.cpp
+        src/models/headers/IntroWindowState.h
+        src/models/AppWindow.cpp
+        src/models/headers/AppWindow.h
+        src/models/GameWindowState.cpp
+        src/models/headers/GameWindowState.h
+        src/models/ScoreWindowState.cpp
+        src/models/headers/ScoreWindowState.h
+        src/models/EndScreenWindowState.cpp
+        src/models/headers/EndScreenWindowState.h)
 target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_17)
 

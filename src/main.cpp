@@ -1,4 +1,4 @@
-#include "../models/headers/Game.h"
+#include "models/headers/Game.h"
 
 int main() {
     Game game;
