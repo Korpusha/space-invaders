@@ -1,31 +1,40 @@
 #include "headers/IntroWindowState.h"
 
-void IntroWindowState::setup(sf::RenderWindow &window)
+IntroWindowState::IntroWindowState()
 {
-    // Font
-    sf::Font font;
-    if (!font.loadFromFile(R"(..\..\static\fonts\cour.ttf)")) {
-        std::cout << "Font wasn't found" << std::endl;
-    }
+    this->introText = new sf::Text();
+    this->introText->setString("Input the nickname and press enter to continue...");
+    this->introText->setFont(*this->textFont);
+    this->introText->setCharacterSize(30);
+    this->introText->setFillColor(*this->schemeColorGreen);
 
-    // Intro text
-    sf::Text introductionText {};
-    introductionText.setString("Input the nickname and press enter to continue...");
-    introductionText.setFont(font);
-    introductionText.setFillColor(sf::Color(16, 121, 30));
-    introductionText.setCharacterSize(36);
+    this->inputText = new sf::Text();
+    this->inputText->setFont(*this->textFont);
+    this->inputText->setCharacterSize(30);
+    this->inputText->setFillColor(*this->schemeColorGreen);
+    this->inputText->setStyle(sf::Text::Bold);
+}
+
+IntroWindowState::~IntroWindowState()
+{
+    delete this->introText;
+    delete this->inputText;
 }
 
 WindowState* IntroWindowState::update(sf::RenderWindow& window, sf::Event& ev)
 {
     if (ev.type == sf::Event::TextEntered) {
-        if (ev.text.unicode < 128) {
-            std::cout << ev.text.unicode << std::endl;
+        char inputChar = static_cast<char>(ev.text.unicode);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) {
+            this->eraseNicknameChar();
+        } else {
+            this->appendNicknameChar(inputChar);
         }
+        this->inputText->setString(this->playerNickname);
     }
 
     if (ev.type == sf::Event::KeyPressed) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !this->playerNickname.empty()) {
             return new GameWindowState();
         }
     }
@@ -35,19 +44,34 @@ WindowState* IntroWindowState::update(sf::RenderWindow& window, sf::Event& ev)
 
 void IntroWindowState::render(sf::RenderWindow &window)
 {
-    window.clear(sf::Color::Black);
+    // Background
+    window.clear(*this->schemeColorBlack);
 
     // Intro text
-//    introductionText.setPosition(25.f, 0.f);
-//    sf::FloatRect textRect = introductionText.getLocalBounds();
-//    introductionText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-//    introductionText.setPosition(sf::Vector2f((float) window.getSize().x / 2.0f,(float) window.getSize().y / 3.0f));
-//    window.draw(introductionText);
+    sf::FloatRect introTextRect = this->introText->getLocalBounds();
+    this->introText->setOrigin(introTextRect.left + introTextRect.width / 2.0f, introTextRect.top + introTextRect.height / 2.0f);
+    this->introText->setPosition((float) window.getSize().x / 2.0f,(float) window.getSize().y / 3.0f);
+    window.draw(*this->introText);
 
-    // Cursor
-    sf::RectangleShape cursor(sf::Vector2f(3.f, 36.f));
-    cursor.setPosition(sf::Vector2f(25.f, 100.f));
-    window.draw(cursor);
+    // Player input
+    sf::FloatRect playerInputRect = this->introText->getLocalBounds();
+    this->inputText->setOrigin(playerInputRect.left + playerInputRect.width / 2.0f, playerInputRect.top + playerInputRect.height / 2.0f);
+    this->inputText->setPosition((float) window.getSize().x / 2.0f, (float) (window.getSize().y / 2.5));
+    window.draw(*this->inputText);
 
     window.display();
+}
+
+void IntroWindowState::appendNicknameChar(char inputChar)
+{
+    if (std::isalnum(inputChar) && this->playerNickname.size() < 10) {
+        this->playerNickname += inputChar;
+    }
+}
+
+void IntroWindowState::eraseNicknameChar()
+{
+    if (!this->playerNickname.empty()) {
+        this->playerNickname.erase(this->playerNickname.size() - 1, 1);
+    }
 }

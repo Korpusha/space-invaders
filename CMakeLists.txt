@@ -31,8 +31,8 @@ add_executable(main src/main.cpp
         src/models/headers/WindowState.h
         src/models/IntroWindowState.cpp
         src/models/headers/IntroWindowState.h
-        src/models/AppWindow.cpp
-        src/models/headers/AppWindow.h
+        src/models/WindowContext.cpp
+        src/models/headers/WindowContext.h
         src/models/GameWindowState.cpp
         src/models/headers/GameWindowState.h
         src/models/ScoreWindowState.cpp
@@ -41,6 +41,8 @@ add_executable(main src/main.cpp
         src/models/headers/EndScreenWindowState.h)
 target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_17)
+
+INCLUDE_DIRECTORIES(src)
 
 if(WIN32)
     add_custom_command(

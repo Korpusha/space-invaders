@@ -4,26 +4,14 @@
 
 #include <iostream>
 #include "SFML/Graphics.hpp"
-#include "Player.h"
-#include "EnemySpaceshipSquadron.h"
-#include "AppWindow.h"
-
-using namespace sf;
-using namespace std;
+#include "WindowContext.h"
 
 class Game
 {
 private:
-    AppWindow* appWindow = nullptr;
-    Player* player = nullptr;
-    EnemySpaceshipSquadron* enemySpaceshipSquadron = nullptr;
+    WindowContext* windowContext = nullptr;
 private:
-    const string DEFAULT_TITLE = "SpaceInvaders";
-    const string STATIC_FOLDER_PATH = R"(..\..\static\)";
-    const string DEFAULT_FONT = "cour.ttf";
-private:
-    void setAppWindow();
-    void setPlayer();
+    void setWindowContext();
     void update();
     void render();
     bool running();
