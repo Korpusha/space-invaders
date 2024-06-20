@@ -3,40 +3,33 @@
 
 
 #include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <vector>
+#include <algorithm>
 
-using namespace std;
-
-template<typename T>
 class Record {
 private:
-    string name;
-    T value;
+    std::string name;
+    unsigned int value;
+    static const std::string RECORDS_PATH;
+    static const unsigned int MAX_RECORDS;
 private:
-    void setName(const string& name_);
-    void setValue(T value_);
+    void setName(const std::string& name_);
+    void setValue(unsigned int value_);
+    void static loadToFile(std::vector<Record>& records);
 public:
     Record() = delete;
-    Record(string name_, T value_);
+    Record(const std::string& name_, unsigned int value_);
+    const std::string& getName();
+    unsigned int getValue();
+    static std::vector<Record> loadFromFile();
+    static void appendToFile(const Record& record);
+    bool operator<(Record& record);
+    bool operator==(Record& record);
+    friend std::ofstream& operator<<(std::ofstream& fout, Record& record);
+    friend std::ostream& operator<<(std::ostream& out, Record& record);
 };
-
-template<typename T>
-Record<T>::Record(string name_, T value_)
-{
-    this->setName(name_);
-    this->setValue(value_);
-}
-
-template<typename T>
-void Record<T>::setName(const string& name_)
-{
-    this->name = name_;
-}
-
-template<typename T>
-void Record<T>::setValue(T value_)
-{
-    this->value = value_;
-}
 
 
 #endif

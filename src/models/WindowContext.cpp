@@ -2,7 +2,8 @@
 
 WindowContext::WindowContext()
 {
-    this->window = new sf::RenderWindow(sf::VideoMode(1280, 1024), WindowContext::TITLE, sf::Style::Close);
+    // 1280x720
+    this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), WindowContext::TITLE, sf::Style::Close);
     this->windowState = new IntroWindowState();
     this->ev = sf::Event {};
 

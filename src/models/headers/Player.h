@@ -10,18 +10,17 @@ class Player {
 private:
     string nickname;
     AllySpaceship *allySpaceship;
-    Record<unsigned int> *record;
-private:
+    Record *record;
     void setNickname(const string& nickname_);
-    void setAllySpaceship(AllySpaceship *allySpaceship_);
-    void setRecord(Record<unsigned int> *record_);
+    void setRecord();
 public:
     Player() = delete;
-    Player(const string& nickname_, AllySpaceship *allySpaceship_, Record<unsigned int> *record_);
+    Player(const string& nickname_, AllySpaceship *allySpaceship_);
     ~Player();
     string getNickname();
     AllySpaceship *getAllySpaceship();
-    Record<unsigned int> *getRecord();
+    Record *getRecord();
+    void setAllySpaceship(AllySpaceship *allySpaceship_);
 };
 
 

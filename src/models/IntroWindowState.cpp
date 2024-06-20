@@ -35,7 +35,7 @@ WindowState* IntroWindowState::update(sf::RenderWindow& window, sf::Event& ev)
 
     if (ev.type == sf::Event::KeyPressed) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !this->playerNickname.empty()) {
-            return new GameWindowState();
+            return new GameWindowState(this->playerNickname);
         }
     }
 

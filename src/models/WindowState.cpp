@@ -3,7 +3,7 @@
 WindowState::WindowState()
 {
     auto* font_ = new sf::Font();
-    font_->loadFromFile(WindowState::getStaticFontFolderPath() + WindowState::FONT);
+    font_->loadFromFile(WindowState::getFontFolderPath() + WindowState::FONT);
 
     this->textFont = font_;
     this->schemeColorGreen = new sf::Color(40, 180, 30);
@@ -24,11 +24,16 @@ WindowState* WindowState::update(sf::RenderWindow &window, sf::Event& ev)
 
 void WindowState::render(sf::RenderWindow &window)
 {
-    window.clear(sf::Color::White);
+    window.clear(*this->schemeColorBlack);
     window.display();
 }
 
-std::string WindowState::getStaticFontFolderPath()
+std::string WindowState::getFontFolderPath()
 {
     return WindowState::STATIC_PATH + "fonts/";
+}
+
+std::string WindowState::getAssetsFolderPath()
+{
+    return WindowState::STATIC_PATH + "assets/";
 }

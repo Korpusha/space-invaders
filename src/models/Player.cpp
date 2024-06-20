@@ -1,10 +1,10 @@
 #include "headers/Player.h"
 
-Player::Player(const string& nickname_, AllySpaceship *allySpaceship_, Record<unsigned int> *record_)
+Player::Player(const string& nickname_, AllySpaceship *allySpaceship_)
 {
     this->setNickname(nickname_);
     this->setAllySpaceship(allySpaceship_);
-    this->setRecord(record_);
+    this->setRecord();
 }
 
 Player::~Player()
@@ -23,9 +23,9 @@ void Player::setAllySpaceship(AllySpaceship *allySpaceship_)
     this->allySpaceship = allySpaceship_;
 }
 
-void Player::setRecord(Record<unsigned int> *record_)
+void Player::setRecord()
 {
-    this->record = record_;
+    this->record = new Record(this->getNickname(), 0);
 }
 
 string Player::getNickname()
@@ -38,7 +38,7 @@ AllySpaceship *Player::getAllySpaceship()
     return this->allySpaceship;
 }
 
-Record<unsigned int> *Player::getRecord()
+Record *Player::getRecord()
 {
     return this->record;
 }

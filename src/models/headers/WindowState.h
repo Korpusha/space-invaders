@@ -12,12 +12,15 @@ protected:
     sf::Color* schemeColorBlack;
     inline static const std::string STATIC_PATH = R"(..\..\static\)";
     inline static const std::string FONT = "cour.ttf";
+    inline static const std::string ALLY_SPACESHIP_TEXTURE = "ally_spaceship.png";
+    inline static const std::string ENEMY_SPACESHIP_TEXTURE = "enemy_spaceship.png";
 public:
     WindowState();
-    ~WindowState();
+    virtual ~WindowState();
     virtual WindowState* update(sf::RenderWindow& window, sf::Event& ev);
     virtual void render(sf::RenderWindow& window);
-    static std::string getStaticFontFolderPath();
+    static std::string getFontFolderPath();
+    static std::string getAssetsFolderPath();
 };
 
 
