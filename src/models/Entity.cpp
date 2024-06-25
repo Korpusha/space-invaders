@@ -1,58 +1,60 @@
 #include "headers/Entity.h"
 
-Entity::Entity(const string& textureFilePath, Vector2f position_)
-{
-    this->setTexture(textureFilePath);
-    auto *s = new Sprite (*this->texture);
-
-    this->setSprite(s);
-    this->setPosition(position_);
-}
-
-Entity::~Entity()
-{
-    delete this->getTexture();
-}
-
-void Entity::setSprite(Sprite* sprite_)
-{
-    this->sprite = sprite_;
-}
-
-void Entity::setTexture(const string &textureFilePath)
-{
-    auto *t = new Texture;
-    t->loadFromFile(textureFilePath);
-
-    this->texture = t;
-}
-
-void Entity::setPosition(Vector2f position_)
+void Entity::setPosition(sf::Vector2f position_)
 {
     this->position = position_;
 }
 
-Sprite* Entity::getSprite()
+void Entity::setXVelocity(float xVelocity_)
 {
-    return this->sprite;
+    this->xVelocity = xVelocity_;
 }
 
-Texture* Entity::getTexture()
+void Entity::setYVelocity(float yVelocity_)
 {
-    return this->texture;
+    this->yVelocity = yVelocity_;
 }
 
-Vector2f Entity::getPosition()
+void Entity::moveRight()
+{
+    this->setPosition(sf::Vector2f { this->getPosition().x + this->getXVelocity(), this->getPosition().y });
+}
+
+void Entity::moveLeft()
+{
+    this->setPosition(sf::Vector2f { this->getPosition().x - this->getXVelocity(), this->getPosition().y });
+}
+
+void Entity::moveUp()
+{
+    this->setPosition(sf::Vector2f { this->getPosition().x, this->getPosition().y - this->getYVelocity() });
+}
+
+void Entity::moveDown()
+{
+    this->setPosition(sf::Vector2f { this->getPosition().x, this->getPosition().y + this->getYVelocity() });
+}
+
+sf::Vector2f Entity::getPosition() const
 {
     return this->position;
 }
 
-void Entity::update()
+float Entity::getXVelocity() const
 {
-    this->setPosition(this->position);
+    return this->xVelocity;
 }
 
-void Entity::render(RenderTarget& target)
+float Entity::getYVelocity() const
 {
-    target.draw(*this->getSprite());
+    return this->yVelocity;
+}
+
+void Entity::update()
+{
+    this->setPosition(this->getPosition());
+}
+
+void Entity::render(sf::RenderTarget& target)
+{
 }

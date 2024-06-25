@@ -2,11 +2,13 @@
 
 WindowContext::WindowContext()
 {
-    // 1280x720
     this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), WindowContext::TITLE, sf::Style::Close);
     this->windowState = new IntroWindowState();
     this->ev = sf::Event {};
 
+    sf::Image icon = EnemySpaceship::getEnemySpaceshipImage(EnemySpaceship::Type::Middle);
+
+    this->window->setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     this->window->setFramerateLimit(60);
     this->window->setVerticalSyncEnabled(false);
 }
@@ -17,7 +19,7 @@ WindowContext::~WindowContext()
     delete this->windowState;
 }
 
-void WindowContext::update()
+void WindowContext::pollEvents()
 {
     while (this->window->pollEvent(this->ev)) {
         if (this->ev.type == sf::Event::Closed) {
@@ -33,6 +35,11 @@ void WindowContext::update()
             this->resetWindowState(newWindowState);
         }
     }
+}
+
+void WindowContext::handleInput()
+{
+    this->windowState->handleInput();
 }
 
 void WindowContext::render()

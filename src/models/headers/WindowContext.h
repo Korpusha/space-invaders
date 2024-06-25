@@ -13,10 +13,12 @@ private:
     sf::Event ev {};
     WindowState* windowState;
     const std::string TITLE = "SpaceInvaders";
+    const std::string FONT = "cour.ttf";
 public:
     WindowContext();
     ~WindowContext();
-    void update();
+    void pollEvents();
+    void handleInput();
     void render();
     bool running();
     void resetWindowState(WindowState* newWindowState);

@@ -38,7 +38,22 @@ add_executable(main src/main.cpp
         src/models/ScoreWindowState.cpp
         src/models/headers/ScoreWindowState.h
         src/models/EndScreenWindowState.cpp
-        src/models/headers/EndScreenWindowState.h)
+        src/models/headers/EndScreenWindowState.h
+        src/models/SpriteEntity.cpp
+        src/models/headers/SpriteEntity.h
+        src/models/RectangleShapeEntity.cpp
+        src/models/headers/RectangleShapeEntity.h
+        src/models/Gun.cpp
+        src/models/headers/Gun.h
+        src/models/Bullet.cpp
+        src/models/headers/Bullet.h
+        src/models/StaticManager.cpp
+        src/models/headers/StaticManager.h
+        src/models/PlayerGun.cpp
+        src/models/headers/PlayerGun.h
+        src/models/BotGun.cpp
+        src/models/headers/BotGun.h
+)
 target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_17)
 

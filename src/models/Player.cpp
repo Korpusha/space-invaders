@@ -1,6 +1,6 @@
 #include "headers/Player.h"
 
-Player::Player(const string& nickname_, AllySpaceship *allySpaceship_)
+Player::Player(const std::string& nickname_, AllySpaceship *allySpaceship_)
 {
     this->setNickname(nickname_);
     this->setAllySpaceship(allySpaceship_);
@@ -13,7 +13,7 @@ Player::~Player()
     delete this->record;
 }
 
-void Player::setNickname(const string& nickname_)
+void Player::setNickname(const std::string& nickname_)
 {
     this->nickname = nickname_;
 }
@@ -28,7 +28,7 @@ void Player::setRecord()
     this->record = new Record(this->getNickname(), 0);
 }
 
-string Player::getNickname()
+std::string Player::getNickname()
 {
     return this->nickname;
 }

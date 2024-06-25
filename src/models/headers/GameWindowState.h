@@ -5,16 +5,32 @@
 #include "WindowState.h"
 #include "ScoreWindowState.h"
 #include "Record.h"
+#include "Player.h"
+#include "EnemySpaceshipSquadron.h"
+#include "PlayerGun.h"
+#include "Bullet.h"
+#include "StaticManager.h"
 
 class GameWindowState: public WindowState {
-protected:
-    Player* player {};
-public:
     using WindowState::WindowState;
-    explicit GameWindowState(const std::string& playerNickname);
-    WindowState* update(sf::RenderWindow &window, sf::Event& ev) override;
-    void render(sf::RenderWindow &window) override;
+private:
+    void setPlayableArea(sf::RenderWindow &window);
     void setPlayer(const std::string& playerNickname);
+    void setEnemySpaceshipSquadron();
+    void setScoreText();
+    [[nodiscard]] AllySpaceship* getAllySpaceship() const;
+protected:
+    sf::RectangleShape* playableArea;
+    Player* player {};
+    EnemySpaceshipSquadron* enemySpaceshipSquadron {};
+    sf::Text* scoreText;
+public:
+    explicit GameWindowState(const std::string& playerNickname, sf::RenderWindow &window);
+    ~GameWindowState() override;
+
+    WindowState* update(sf::RenderWindow &window, sf::Event& ev) override;
+    void handleInput() override;
+    void render(sf::RenderWindow &window) override;
 };
 
 

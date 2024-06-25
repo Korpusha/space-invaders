@@ -1,8 +1,4 @@
-#include <iterator>
 #include "headers/Record.h"
-
-const std::string Record::RECORDS_PATH = R"(..\..\src\scores.txt)";
-const unsigned int Record::MAX_RECORDS = 10;
 
 Record::Record(const std::string& name_, unsigned int value_)
 {
@@ -33,7 +29,7 @@ void Record::setValue(unsigned int value_)
 std::vector<Record> Record::loadFromFile()
 {
     std::vector<Record> records = std::vector<Record> {};
-    std::ifstream fin(Record::RECORDS_PATH);
+    std::ifstream fin(StaticManager::getScores());
 
     if (!fin.is_open()) {
         return records;
@@ -52,7 +48,7 @@ std::vector<Record> Record::loadFromFile()
 
 void Record::loadToFile(std::vector<Record>& records)
 {
-    std::ofstream fout(Record::RECORDS_PATH);
+    std::ofstream fout(StaticManager::getScores());
 
     if (!fout.is_open()) {
         fout.close();

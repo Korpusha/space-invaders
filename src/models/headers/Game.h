@@ -10,9 +10,9 @@ class Game
 {
 private:
     WindowContext* windowContext = nullptr;
-private:
     void setWindowContext();
-    void update();
+    void pollEvents();
+    void handleInput();
     void render();
     bool running();
 public:

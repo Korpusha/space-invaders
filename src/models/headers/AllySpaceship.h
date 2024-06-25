@@ -3,9 +3,24 @@
 
 
 #include "Spaceship.h"
+#include "EnemySpaceshipSquadron.h"
+#include "Record.h"
 
-class AllySpaceship: public Spaceship {
-    using Spaceship::Spaceship;
+enum AllySpaceshipState {
+    AllySpaceshipMoveLeft,
+    AllySpaceshipMoveRight,
+    AllySpaceshipStayStill,
+};
+
+class AllySpaceship: public Spaceship<AllySpaceshipState> {
+    using Spaceship<AllySpaceshipState>::Spaceship;
+public:
+    inline static const float X_VELOCITY = 10.f;
+    inline static const float GUN_RELOAD_SEC = 2.f;
+
+    void update();
+    void handleInput(const sf::RectangleShape& playableArea, const EnemySpaceshipSquadron& enemySpaceshipSquadron, Record& record);
+    void render(sf::RenderTarget& renderTarget);
 };
 
 

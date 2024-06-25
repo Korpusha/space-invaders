@@ -6,12 +6,12 @@ IntroWindowState::IntroWindowState()
     this->introText->setString("Input the nickname and press enter to continue...");
     this->introText->setFont(*this->textFont);
     this->introText->setCharacterSize(30);
-    this->introText->setFillColor(*this->schemeColorGreen);
+    this->introText->setFillColor(StaticManager::GREEN);
 
     this->inputText = new sf::Text();
     this->inputText->setFont(*this->textFont);
     this->inputText->setCharacterSize(30);
-    this->inputText->setFillColor(*this->schemeColorGreen);
+    this->inputText->setFillColor(StaticManager::GREEN);
     this->inputText->setStyle(sf::Text::Bold);
 }
 
@@ -35,7 +35,7 @@ WindowState* IntroWindowState::update(sf::RenderWindow& window, sf::Event& ev)
 
     if (ev.type == sf::Event::KeyPressed) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !this->playerNickname.empty()) {
-            return new GameWindowState(this->playerNickname);
+            return new GameWindowState(this->playerNickname, window);
         }
     }
 
@@ -44,16 +44,13 @@ WindowState* IntroWindowState::update(sf::RenderWindow& window, sf::Event& ev)
 
 void IntroWindowState::render(sf::RenderWindow &window)
 {
-    // Background
-    window.clear(*this->schemeColorBlack);
+    window.clear(StaticManager::BLACK);
 
-    // Intro text
     sf::FloatRect introTextRect = this->introText->getLocalBounds();
     this->introText->setOrigin(introTextRect.left + introTextRect.width / 2.0f, introTextRect.top + introTextRect.height / 2.0f);
     this->introText->setPosition((float) window.getSize().x / 2.0f,(float) window.getSize().y / 3.0f);
     window.draw(*this->introText);
 
-    // Player input
     sf::FloatRect playerInputRect = this->introText->getLocalBounds();
     this->inputText->setOrigin(playerInputRect.left + playerInputRect.width / 2.0f, playerInputRect.top + playerInputRect.height / 2.0f);
     this->inputText->setPosition((float) window.getSize().x / 2.0f, (float) (window.getSize().y / 2.5));
@@ -64,7 +61,7 @@ void IntroWindowState::render(sf::RenderWindow &window)
 
 void IntroWindowState::appendNicknameChar(char inputChar)
 {
-    if (std::isalnum(inputChar) && this->playerNickname.size() < 10) {
+    if (std::isalnum(inputChar) && this->playerNickname.size() < Player::NICKNAME_MAX_LENGTH) {
         this->playerNickname += inputChar;
     }
 }

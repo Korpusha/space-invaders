@@ -2,46 +2,70 @@
 
 ScoreWindowState::ScoreWindowState(Player* player)
 {
-    std::string playerScore = std::to_string(player->getRecord()->getValue());
+    this->setScoreText(std::to_string(player->getRecord()->getValue()));
+    this->setScoreRectShape();
+    this->setRecordTexts(*player->getRecord());
+    this->setContinueText();
+}
 
+ScoreWindowState::~ScoreWindowState()
+{
+    delete this->scoreText;
+    delete this->scoreRectShape;
+    for (auto& record : this->recordTexts) {
+        delete record;
+    }
+    delete this->continueText;
+}
+
+void ScoreWindowState::setScoreText(const std::string& playerScore)
+{
     this->scoreText = new sf::Text();
     this->scoreText->setString("Score: " + playerScore);
     this->scoreText->setFont(*this->textFont);
     this->scoreText->setCharacterSize(30);
-    this->scoreText->setFillColor(*this->schemeColorGreen);
+    this->scoreText->setFillColor(StaticManager::GREEN);
+}
 
-    this->continueHintText = new sf::Text();
-    this->continueHintText->setString("Press enter to continue...");
-    this->continueHintText->setFont(*this->textFont);
-    this->continueHintText->setCharacterSize(30);
-    this->continueHintText->setFillColor(*this->schemeColorGreen);
+void ScoreWindowState::setScoreRectShape()
+{
+    this->scoreRectShape = new sf::RectangleShape(sf::Vector2f {1000, 550 });
+    this->scoreRectShape->setFillColor(StaticManager::BLACK);
+}
 
-    this->scoreBox = new sf::RectangleShape(Vector2f {1000, 550 });
-    this->scoreBox->setFillColor(*this->schemeColorBlack);
-
-    Record::appendToFile(*player->getRecord());
-    this->recordScores = Record::loadFromFile();
+void ScoreWindowState::setRecordTexts(Record& playerRecord)
+{
+    Record::appendToFile(playerRecord);
 
     this->recordTexts = std::vector<sf::Text*> {};
     std::stringstream recordsStream;
 
-    for (auto& i : this->recordScores) {
-        auto* recordText = new Text();
+    for (auto& record : Record::loadFromFile()) {
+        auto* recordText = new sf::Text();
 
-        recordsStream << i;
+        recordsStream << record;
         recordText->setString(recordsStream.str());
         recordsStream.str("");
 
         recordText->setFont(*this->textFont);
         recordText->setCharacterSize(30);
-        recordText->setFillColor(*this->schemeColorGreen);
+        recordText->setFillColor(StaticManager::GREEN);
 
-        if (*player->getRecord() == i) {
+        if (playerRecord == record) {
             recordText->setStyle(sf::Text::Bold);
         }
 
         this->recordTexts.emplace_back(recordText);
     }
+}
+
+void ScoreWindowState::setContinueText()
+{
+    this->continueText = new sf::Text();
+    this->continueText->setString("Press enter to continue...");
+    this->continueText->setFont(*this->textFont);
+    this->continueText->setCharacterSize(30);
+    this->continueText->setFillColor(StaticManager::GREEN);
 }
 
 WindowState *ScoreWindowState::update(sf::RenderWindow &window, sf::Event &ev)
@@ -57,46 +81,31 @@ WindowState *ScoreWindowState::update(sf::RenderWindow &window, sf::Event &ev)
 
 void ScoreWindowState::render(sf::RenderWindow &window)
 {
-    // Background
-    window.clear(*this->schemeColorBlack);
+    window.clear(StaticManager::BLACK);
 
-    // Score box
-    sf::FloatRect scoreBoxRect = this->scoreBox->getLocalBounds();
-    this->scoreBox->setOrigin(scoreBoxRect.left + scoreBoxRect.width / 2.0f, scoreBoxRect.top + scoreBoxRect.height / 2.0f);
-    this->scoreBox->setPosition((float) window.getSize().x / 2.0f,(float) window.getSize().y / 2.0f);
-    window.draw(*this->scoreBox);
+    sf::FloatRect scoreBoxRect = this->scoreRectShape->getLocalBounds();
+    this->scoreRectShape->setOrigin(scoreBoxRect.left + scoreBoxRect.width / 2.0f, scoreBoxRect.top + scoreBoxRect.height / 2.0f);
+    this->scoreRectShape->setPosition((float) window.getSize().x / 2.0f, (float) window.getSize().y / 2.0f);
+    window.draw(*this->scoreRectShape);
 
-    // Continue hint text
-    sf::FloatRect continueHintTextRect = this->continueHintText->getLocalBounds();
-    this->continueHintText->setOrigin(continueHintTextRect.left + continueHintTextRect.width / 2.0f, 0.f);
-    this->continueHintText->setPosition(this->scoreBox->getPosition().x, (this->scoreBox->getPosition().y + scoreBoxRect.height / 2.0f));
-    window.draw(*this->continueHintText);
+    sf::FloatRect continueHintTextRect = this->continueText->getLocalBounds();
+    this->continueText->setOrigin(continueHintTextRect.left + continueHintTextRect.width / 2.0f, 0.f);
+    this->continueText->setPosition(this->scoreRectShape->getPosition().x, (this->scoreRectShape->getPosition().y + scoreBoxRect.height / 2.0f));
+    window.draw(*this->continueText);
 
-    // Score text
     sf::FloatRect scoreTextRect = this->scoreText->getLocalBounds();
     this->scoreText->setOrigin(scoreTextRect.width + 25.f, 0.f);
-    this->scoreText->setPosition(this->scoreBox->getPosition().x + scoreBoxRect.width / 2.0f, this->scoreBox->getPosition().y - scoreBoxRect.height / 2.0f);
+    this->scoreText->setPosition(this->scoreRectShape->getPosition().x + scoreBoxRect.width / 2.0f, this->scoreRectShape->getPosition().y - scoreBoxRect.height / 2.0f);
     window.draw(*this->scoreText);
 
-    // Record texts
     float yOffset = scoreTextRect.height + 50.f;
     for (auto& recordText : this->recordTexts) {
         sf::FloatRect recordTextRect = recordText->getLocalBounds();
         recordText->setOrigin(recordTextRect.left + recordTextRect.width / 2.0f, 0.f);
-        recordText->setPosition(this->scoreBox->getPosition().x, this->scoreBox->getPosition().y - scoreBoxRect.height / 2.0f + yOffset);
+        recordText->setPosition(this->scoreRectShape->getPosition().x, this->scoreRectShape->getPosition().y - scoreBoxRect.height / 2.0f + yOffset);
         yOffset += recordTextRect.height + 20.f;
         window.draw(*recordText);
     }
 
     window.display();
-}
-
-ScoreWindowState::~ScoreWindowState()
-{
-    delete this->scoreText;
-    for (auto& record : this->recordTexts) {
-        delete record;
-    }
-    delete this->continueHintText;
-    delete this->scoreBox;
 }

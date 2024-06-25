@@ -6,17 +6,19 @@
 #include "GameWindowState.h"
 
 class IntroWindowState: public WindowState {
-protected:
+private:
     sf::Text* introText;
     sf::Text* inputText;
     std::string playerNickname;
-public:
-    IntroWindowState();
-    ~IntroWindowState();
-    WindowState* update(sf::RenderWindow &window, sf::Event& ev) override;
-    void render(sf::RenderWindow &window) override;
+
     void appendNicknameChar(char inputChar);
     void eraseNicknameChar();
+public:
+    IntroWindowState();
+    ~IntroWindowState() override;
+
+    WindowState* update(sf::RenderWindow &window, sf::Event& ev) override;
+    void render(sf::RenderWindow &window) override;
 };
 
 

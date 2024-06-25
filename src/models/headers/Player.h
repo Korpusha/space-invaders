@@ -8,19 +8,23 @@
 
 class Player {
 private:
-    string nickname;
+    std::string nickname;
     AllySpaceship *allySpaceship;
     Record *record;
-    void setNickname(const string& nickname_);
+    void setNickname(const std::string& nickname_);
     void setRecord();
 public:
+    const int inline static NICKNAME_MAX_LENGTH = 10;
+
     Player() = delete;
-    Player(const string& nickname_, AllySpaceship *allySpaceship_);
+    Player(const std::string& nickname_, AllySpaceship *allySpaceship_);
     ~Player();
-    string getNickname();
+
+    void setAllySpaceship(AllySpaceship *allySpaceship_);
+
+    std::string getNickname();
     AllySpaceship *getAllySpaceship();
     Record *getRecord();
-    void setAllySpaceship(AllySpaceship *allySpaceship_);
 };
 
 

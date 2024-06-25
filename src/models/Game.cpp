@@ -18,14 +18,20 @@ void Game::setWindowContext()
 void Game::run()
 {
     while (this->running()) {
-        this->update();
+        this->pollEvents();
+        this->handleInput();
         this->render();
     }
 }
 
-void Game::update()
+void Game::pollEvents()
 {
-    this->windowContext->update();
+    this->windowContext->pollEvents();
+}
+
+void Game::handleInput()
+{
+    this->windowContext->handleInput();
 }
 
 void Game::render()

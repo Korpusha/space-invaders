@@ -3,29 +3,32 @@
 
 
 #include "SFML/Graphics.hpp"
+#include <iostream>
 #include <utility>
-
-using namespace std;
-using namespace sf;
 
 class Entity {
 protected:
-    Sprite* sprite;
-    Texture* texture;
-    Vector2f position;
-protected:
-    void setSprite(Sprite* sprite_);
-    void setTexture(const string& textureFilePath);
+    sf::Vector2f position = sf::Vector2f { 0.f, 0.f };
+    float xVelocity = 0.f;
+    float yVelocity = 0.f;
 public:
-    Entity() = delete;
-    Entity(const string& textureFilePath, Vector2f position_);
-    ~Entity();
-    Sprite* getSprite();
-    Texture* getTexture();
-    Vector2f getPosition();
-    void setPosition(Vector2f position_);
+//    Entity(const Entity& entity) = default;
+    virtual ~Entity() = default;
+
+    void setPosition(sf::Vector2f position_);
+    void setXVelocity(float xVelocity_);
+    void setYVelocity(float yVelocity_);
+    void moveRight();
+    void moveLeft();
+    void moveUp();
+    void moveDown();
+
+    [[nodiscard]] sf::Vector2f getPosition() const;
+    [[nodiscard]] float getXVelocity() const;
+    [[nodiscard]] float getYVelocity() const;
+
     virtual void update();
-    virtual void render(RenderTarget& renderTarget);
+    virtual void render(sf::RenderTarget& renderTarget);
 };
 
 
