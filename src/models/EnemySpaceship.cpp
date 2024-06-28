@@ -24,9 +24,10 @@ void EnemySpaceship::update()
 
 void EnemySpaceship::render(sf::RenderTarget &renderTarget)
 {
+    this->getEntity()->render(renderTarget);
+
     this->getGun()->getEntity()->setPosition(this->getEntity()->getPosition());
     this->getGun()->render(renderTarget);
-    this->getEntity()->render(renderTarget);
 }
 
 sf::Image EnemySpaceship::getEnemySpaceshipImage(EnemySpaceship::Type type)

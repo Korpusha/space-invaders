@@ -7,7 +7,6 @@ Gun::Gun(RectangleShapeEntity *entity_, Bullet* bullet_, float reloadSec_)
     this->setEntity(entity_);
     this->setBullet(bullet_);
     this->setReloadSec(reloadSec_);
-    this->setState(GunState::Reloaded);
 }
 
 Gun::~Gun()

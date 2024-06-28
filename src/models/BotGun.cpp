@@ -11,9 +11,6 @@ void BotGun::update(const sf::RectangleShape& playableArea)
             newState = GunState::Reloading;
             break;
         case Reloading:
-            if (this->getReloadElapsedClock().getElapsedTime().asSeconds() >= this->getReloadSec()) {
-                newState = GunState::Reloaded;
-            }
             break;
     }
 

@@ -18,12 +18,14 @@ private:
     void setPlayer(const std::string& playerNickname);
     void setEnemySpaceshipSquadron();
     void setScoreText();
+    void setPlayerLives();
     [[nodiscard]] AllySpaceship* getAllySpaceship() const;
 protected:
     sf::RectangleShape* playableArea;
     Player* player {};
     EnemySpaceshipSquadron* enemySpaceshipSquadron {};
     sf::Text* scoreText;
+    sf::Text* playerLives;
 public:
     explicit GameWindowState(const std::string& playerNickname, sf::RenderWindow &window);
     ~GameWindowState() override;

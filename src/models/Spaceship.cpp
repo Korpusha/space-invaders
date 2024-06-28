@@ -6,11 +6,12 @@ template class Spaceship<AllySpaceshipState>;
 template class Spaceship<EnemySpaceshipState>;
 
 template<typename State>
-Spaceship<State>::Spaceship(SpriteEntity* entity_, Gun *gun_, State state_)
+Spaceship<State>::Spaceship(SpriteEntity* entity_, Gun *gun_, State state_, unsigned int lives)
 {
     this->setEntity(entity_);
     this->setGun(gun_);
     this->setState(state_);
+    this->setLives(lives);
 }
 
 template<typename State>
@@ -26,7 +27,7 @@ void Spaceship<State>::setGun(Gun *gun_)
 }
 
 template<typename State>
-void Spaceship<State>::setLives(int lives_)
+void Spaceship<State>::setLives(unsigned int lives_)
 {
     this->lives = lives_;
 }
@@ -70,5 +71,5 @@ bool Spaceship<State>::isAlive() const
 template<typename State>
 void Spaceship<State>::onHit()
 {
-    this->setLives(this->getLives() - 1);
+    this->setLives(this->getLives() ? (this->getLives() - 1) : 0);
 }

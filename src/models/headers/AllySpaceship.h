@@ -17,6 +17,7 @@ class AllySpaceship: public Spaceship<AllySpaceshipState> {
 public:
     inline static const float X_VELOCITY = 10.f;
     inline static const float GUN_RELOAD_SEC = 2.f;
+    inline static const int LIVES_DEFAULT = 3;
 
     void update();
     void handleInput(const sf::RectangleShape& playableArea, const EnemySpaceshipSquadron& enemySpaceshipSquadron, Record& record);

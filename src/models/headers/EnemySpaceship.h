@@ -22,12 +22,13 @@ public:
 private:
     Type type;
 public:
-    EnemySpaceship(SpriteEntity* entity_, Gun *gun_, EnemySpaceshipState state_, Type type_):
-        Spaceship<EnemySpaceshipState>(entity_, gun_, state_), type(type_) {};
+    EnemySpaceship(SpriteEntity* entity_, Gun *gun_, EnemySpaceshipState state_, Type type_, unsigned int lives_):
+        Spaceship<EnemySpaceshipState>(entity_, gun_, state_, lives_), type(type_) {};
 
     inline static const float X_VELOCITY = 10.f;
     inline static const float Y_VELOCITY = 15.f;
     inline static const float GUN_RELOAD_SEC = 1.f;
+    inline static const int LIVES_DEFAULT = 1;
 
     void update();
     void render(sf::RenderTarget& renderTarget);

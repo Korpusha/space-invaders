@@ -8,6 +8,7 @@ GameWindowState::GameWindowState(const std::string &playerNickname, sf::RenderWi
     this->setPlayer(playerNickname);
     this->setEnemySpaceshipSquadron();
     this->setScoreText();
+    this->setPlayerLives();
 }
 
 GameWindowState::~GameWindowState()
@@ -15,6 +16,7 @@ GameWindowState::~GameWindowState()
     delete this->playableArea;
     delete this->scoreText;
     delete this->enemySpaceshipSquadron;
+    delete this->playerLives;
 }
 
 void GameWindowState::setPlayableArea(sf::RenderWindow &window)
@@ -54,10 +56,14 @@ void GameWindowState::setScoreText()
     this->scoreText->setFont(*this->textFont);
     this->scoreText->setCharacterSize(30);
     this->scoreText->setFillColor(StaticManager::GREEN);
+}
 
-    sf::FloatRect scoreTextRect = this->scoreText->getLocalBounds();
-    this->scoreText->setOrigin(scoreTextRect.left + scoreTextRect.width, scoreTextRect.top + scoreTextRect.height);
-    this->scoreText->setPosition(this->playableArea->getPosition().x - this->playableArea->getSize().x / 2.f, this->playableArea->getPosition().y + this->playableArea->getSize().y / 2.f);
+void GameWindowState::setPlayerLives()
+{
+    this->playerLives = new sf::Text();
+    this->playerLives->setFont(*this->textFont);
+    this->playerLives->setCharacterSize(30);
+    this->playerLives->setFillColor(StaticManager::GREEN);
 }
 
 AllySpaceship* GameWindowState::getAllySpaceship() const
@@ -82,7 +88,7 @@ AllySpaceship* GameWindowState::getAllySpaceship() const
         AllySpaceship::GUN_RELOAD_SEC
     );
 
-    return new AllySpaceship(allySpaceshipSpriteEntity, gun, AllySpaceshipState::AllySpaceshipStayStill);
+    return new AllySpaceship(allySpaceshipSpriteEntity, gun, AllySpaceshipState::AllySpaceshipStayStill, AllySpaceship::LIVES_DEFAULT);
 }
 
 WindowState *GameWindowState::update(sf::RenderWindow &window, sf::Event &ev)
@@ -111,7 +117,15 @@ void GameWindowState::render(sf::RenderWindow &window)
     this->player->getAllySpaceship()->render(window);
 
     this->scoreText->setString("Score: " + std::to_string(this->player->getRecord()->getValue()));
+    this->scoreText->setPosition(this->playableArea->getPosition().x - this->playableArea->getSize().x / 2.f,
+                                 this->playableArea->getPosition().y + this->playableArea->getSize().y / 2.f);
     window.draw(*this->scoreText);
+
+    this->playerLives->setString("x" + std::to_string(this->player->getAllySpaceship()->getLives()));
+    sf::FloatRect playerLivesRect = this->playerLives->getGlobalBounds();
+    this->playerLives->setPosition(this->playableArea->getPosition().x + this->playableArea->getSize().x / 2.f - playerLivesRect.getSize().x,
+                                   this->playableArea->getPosition().y + this->playableArea->getSize().y / 2.f);
+    window.draw(*this->playerLives);
 
     window.display();
 }

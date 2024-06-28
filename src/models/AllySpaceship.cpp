@@ -28,7 +28,7 @@ void AllySpaceship::handleInput(const sf::RectangleShape& playableArea, const En
                 }
             }
 
-            if (enemySpaceship->getEntity()->getPosition().y >= this->getEntity()->getPosition().y) {
+            if (enemySpaceship->getEntity()->getPosition().y > this->getEntity()->getPosition().y) {
                 this->setLives(0);
             }
         }

@@ -19,7 +19,8 @@ EnemySpaceshipSquadron::EnemySpaceshipSquadron(const vector<EnemySpaceship::Type
         for (int j = 0; j < columnTemplate.size(); ++j) {
             auto* enemySpaceshipEntity = new SpriteEntity(EnemySpaceship::getEnemySpaceshipImage(columnTemplate[j]));
             sf::FloatRect enemySpaceshipRect = enemySpaceshipEntity->getSprite()->getLocalBounds();
-            enemySpaceshipEntity->getSprite()->setOrigin(enemySpaceshipRect.left + enemySpaceshipRect.width / 2.f, enemySpaceshipRect.top - enemySpaceshipRect.height);
+            enemySpaceshipEntity->getSprite()->setOrigin(enemySpaceshipRect.left + enemySpaceshipRect.width / 2.f,
+                                                         enemySpaceshipRect.top - enemySpaceshipRect.height);
             enemySpaceshipEntity->getSprite()->setScale(sf::Vector2f { 4.f, 4.f });
             enemySpaceshipEntity->getSprite()->setColor(StaticManager::GREEN);
             enemySpaceshipEntity->setPosition(sf::Vector2f {
@@ -29,7 +30,8 @@ EnemySpaceshipSquadron::EnemySpaceshipSquadron(const vector<EnemySpaceship::Type
             enemySpaceshipEntity->setXVelocity(EnemySpaceship::X_VELOCITY);
             enemySpaceshipEntity->setYVelocity(EnemySpaceship::Y_VELOCITY);
 
-            auto* bullet = new Bullet(new RectangleShapeEntity(sf::Vector2f { 2.f, 20.f }), -6.f);
+            auto* bullet = new Bullet(new RectangleShapeEntity(sf::Vector2f { 2.f, 20.f }),
+                                      -6.f);
             bullet->getEntity()->getRectangleShape()->setFillColor(StaticManager::GREEN);
 
             auto *gun = new BotGun(
@@ -38,7 +40,8 @@ EnemySpaceshipSquadron::EnemySpaceshipSquadron(const vector<EnemySpaceship::Type
                 EnemySpaceship::GUN_RELOAD_SEC
             );
 
-            auto* enemySpaceship = new EnemySpaceship(enemySpaceshipEntity, gun, this->state, columnTemplate[j]);
+            auto* enemySpaceship = new EnemySpaceship(enemySpaceshipEntity, gun, this->state,
+                                                      columnTemplate[j], EnemySpaceship::LIVES_DEFAULT);
 
             this->enemySpaceshipsMatrix[i]->push_back(enemySpaceship);
         }
@@ -112,8 +115,11 @@ void EnemySpaceshipSquadron::update(const sf::RectangleShape &playableArea)
         for (EnemySpaceship* enemySpaceship : *enemySpaceshipsMatrix_[i]) {
             if (enemySpaceship->isAlive()) {
                 enemySpaceshipsNew->emplace_back(enemySpaceship);
+                enemySpaceship->setState(this->getState());
+                enemySpaceship->getGun()->update(playableArea);
             }
         }
+
         if (!enemySpaceshipsNew->empty()) {
             enemySpaceshipsMatrixNew.push_back(enemySpaceshipsNew);
         } else {
@@ -175,19 +181,21 @@ void EnemySpaceshipSquadron::update(const sf::RectangleShape &playableArea)
 
     }
 
+    // Get one front row enemy spaceship and set its gun state as reloaded.
+    int randomEnemySpaceshipColumnIndex = 0;
+    if (enemySpaceshipsMatrix_.size() - 1) {
+        randomEnemySpaceshipColumnIndex = rand() % ((int) enemySpaceshipsMatrix_.size() - 1);
+    }
+
+    std::vector<EnemySpaceship*> randEnemySpaceshipColumn = *this->getEnemySpaceshipsMatrix()[randomEnemySpaceshipColumnIndex];
+    randEnemySpaceshipColumn[randEnemySpaceshipColumn.size() - 1]->getGun()->setState(GunState::Reloaded);
+
     for (std::vector<EnemySpaceship*>* enemySpaceships : this->getEnemySpaceshipsMatrix()) {
         for (EnemySpaceship* enemySpaceship : *enemySpaceships) {
             enemySpaceship->setState(this->getState());
             enemySpaceship->update();
         }
     }
-
-    int randomEnemySpaceshipColumnIndex = (enemySpaceshipsMatrix_.size() - 1)
-            ? (rand() % ((int) enemySpaceshipsMatrix_.size() - 1))
-            : 0;
-
-    std::vector<EnemySpaceship*> randEnemySpaceshipColumn = *this->getEnemySpaceshipsMatrix()[randomEnemySpaceshipColumnIndex];
-    randEnemySpaceshipColumn[randEnemySpaceshipColumn.size() - 1]->getGun()->update(playableArea);
 
     this->setNonActionTimeframeClock();
 }

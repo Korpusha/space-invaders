@@ -12,13 +12,13 @@ private:
 protected:
     SpriteEntity* entity;
     Gun* gun;
-    int lives = 1;
+    unsigned int lives = 1;
 public:
-    explicit Spaceship(SpriteEntity* entity_, Gun* gun_, State state_);
+    Spaceship(SpriteEntity* entity_, Gun* gun_, State state_, unsigned int lives);
 
     void setEntity(SpriteEntity* entity_);
     void setGun(Gun* gun_);
-    void setLives(int lives_);
+    void setLives(unsigned int lives_);
     void setState(State state_);
 
     [[nodiscard]] SpriteEntity* getEntity() const;
