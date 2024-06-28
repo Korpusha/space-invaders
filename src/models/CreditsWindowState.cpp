@@ -31,7 +31,7 @@ CreditsWindowState::~CreditsWindowState()
 WindowState *CreditsWindowState::update(sf::RenderWindow &window, sf::Event &ev)
 {
     if (ev.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-        return new IntroWindowState();
+        return new MenuWindowState();
     }
 
     return nullptr;

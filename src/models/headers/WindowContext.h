@@ -4,7 +4,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "WindowState.h"
-#include "IntroWindowState.h"
+#include "MenuWindowState.h"
 #include "EndScreenWindowState.h"
 
 class WindowContext {

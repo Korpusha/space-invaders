@@ -12,7 +12,6 @@ private:
     sf::Text* introText;
     sf::Text* inputText;
     std::string playerNickname;
-    sf::Text* creditsText;
 
     void appendNicknameChar(char inputChar);
     void eraseNicknameChar();

@@ -12,6 +12,7 @@ private:
     inline static const std::string FONT = "cour.ttf";
 
     inline static const std::string ASSETS = StaticManager::STATIC_PATH + R"(assets\)";
+    inline static const std::string LOGO = "logo.png";
     inline static const std::string SPACE_INVADERS = "space_invaders.png";
 
     inline static const std::string SCORES = R"(..\..\src\scores.txt)";
@@ -21,6 +22,7 @@ public:
 
     static std::string getFont();
 
+    static sf::Image getLogoImage();
     static sf::Image getSpaceInvadersImage();
     static sf::Image getAllySpaceshipImage();
 

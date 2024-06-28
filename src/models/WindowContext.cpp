@@ -3,7 +3,7 @@
 WindowContext::WindowContext()
 {
     this->window = new sf::RenderWindow(sf::VideoMode(1920, 1080), WindowContext::TITLE, sf::Style::Close);
-    this->windowState = new IntroWindowState();
+    this->windowState = new MenuWindowState();
     this->ev = sf::Event {};
 
     sf::Image icon = EnemySpaceship::getEnemySpaceshipImage(EnemySpaceship::Type::Middle);
@@ -46,6 +46,5 @@ bool WindowContext::running()
 
 void WindowContext::resetWindowState(WindowState* newWindowState)
 {
-    delete this->windowState;
     this->windowState = newWindowState;
 }

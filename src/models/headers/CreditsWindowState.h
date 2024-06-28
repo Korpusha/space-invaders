@@ -3,7 +3,7 @@
 
 
 #include "WindowState.h"
-#include "IntroWindowState.h"
+#include "MenuWindowState.h"
 
 class CreditsWindowState: public WindowState {
 private:

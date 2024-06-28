@@ -55,6 +55,8 @@ add_executable(main src/main.cpp
         src/models/headers/BotGun.h
         src/models/CreditsWindowState.cpp
         src/models/headers/CreditsWindowState.h
+        src/models/MenuWindowState.cpp
+        src/models/headers/MenuWindowState.h
 )
 target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_17)

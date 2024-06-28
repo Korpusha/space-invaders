@@ -5,6 +5,14 @@ std::string StaticManager::getFont()
     return StaticManager::FONTS + StaticManager::FONT;
 }
 
+sf::Image StaticManager::getLogoImage()
+{
+    sf::Image logoImage;
+    logoImage.loadFromFile(StaticManager::ASSETS + StaticManager::LOGO);
+
+    return logoImage;
+}
+
 sf::Image StaticManager::getSpaceInvadersImage()
 {
     sf::Image spaceInvadersImage;
