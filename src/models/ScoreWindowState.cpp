@@ -62,7 +62,7 @@ void ScoreWindowState::setRecordTexts(Record& playerRecord)
 void ScoreWindowState::setContinueText()
 {
     this->continueText = new sf::Text();
-    this->continueText->setString("Press enter to continue...");
+    this->continueText->setString("Press enter to retry...");
     this->continueText->setFont(*this->textFont);
     this->continueText->setCharacterSize(30);
     this->continueText->setFillColor(StaticManager::GREEN);
@@ -70,9 +70,19 @@ void ScoreWindowState::setContinueText()
 
 WindowState *ScoreWindowState::update(sf::RenderWindow &window, sf::Event &ev)
 {
+    window.setMouseCursorVisible(false);
+
+    if (ev.type == sf::Event::Closed) {
+        return new EndScreenWindowState();
+    }
+
+    if (ev.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+        return new EndScreenWindowState();
+    }
+
     if (ev.type == sf::Event::KeyPressed) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-            return new EndScreenWindowState();
+            return new IntroWindowState();
         }
     }
 

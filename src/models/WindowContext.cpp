@@ -22,14 +22,6 @@ WindowContext::~WindowContext()
 void WindowContext::pollEvents()
 {
     while (this->window->pollEvent(this->ev)) {
-        if (this->ev.type == sf::Event::Closed) {
-            this->resetWindowState(new EndScreenWindowState());
-        }
-
-        if (this->ev.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-            this->resetWindowState(new EndScreenWindowState());
-        }
-
         WindowState* newWindowState = this->windowState->update(*this->window, this->ev);
         if (newWindowState != nullptr) {
             this->resetWindowState(newWindowState);

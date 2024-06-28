@@ -4,7 +4,7 @@
 
 #include "Player.h"
 #include "WindowState.h"
-#include "EndScreenWindowState.h"
+#include "IntroWindowState.h"
 
 class ScoreWindowState: public WindowState {
 private:

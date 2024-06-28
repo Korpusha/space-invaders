@@ -4,12 +4,15 @@
 
 #include "WindowState.h"
 #include "GameWindowState.h"
+#include "CreditsWindowState.h"
+#include "EndScreenWindowState.h"
 
 class IntroWindowState: public WindowState {
 private:
     sf::Text* introText;
     sf::Text* inputText;
     std::string playerNickname;
+    sf::Text* creditsText;
 
     void appendNicknameChar(char inputChar);
     void eraseNicknameChar();

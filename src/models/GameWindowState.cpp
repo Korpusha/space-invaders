@@ -93,6 +93,16 @@ AllySpaceship* GameWindowState::getAllySpaceship() const
 
 WindowState *GameWindowState::update(sf::RenderWindow &window, sf::Event &ev)
 {
+    window.setMouseCursorVisible(false);
+
+    if (ev.type == sf::Event::Closed) {
+        return new EndScreenWindowState();
+    }
+
+    if (ev.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+        return new EndScreenWindowState();
+    }
+
     this->player->getAllySpaceship()->update();
     if (this->enemySpaceshipSquadron->isDefeated() || !this->player->getAllySpaceship()->isAlive()) {
         return new ScoreWindowState(this->player);
