@@ -2,23 +2,20 @@
 #define SPACE_INVADERS_SCOREWINDOWSTATE_H
 
 
-#include "Player.h"
+#include <sstream>
 #include "WindowState.h"
-#include "IntroWindowState.h"
+#include "EndScreenWindowState.h"
+#include "Record.h"
 
 class ScoreWindowState: public WindowState {
-private:
-    sf::Text* scoreText;
+    using WindowState::WindowState;
+protected:
     sf::RectangleShape* scoreRectShape;
     std::vector<sf::Text*> recordTexts;
-    sf::Text* continueText;
-
-    void setScoreText(const std::string& playerScore);
+    void setRecordTexts();
     void setScoreRectShape();
-    void setRecordTexts(Record& playerRecord);
-    void setContinueText();
 public:
-    explicit ScoreWindowState(Player* player);
+    ScoreWindowState();
     ~ScoreWindowState() override;
 
     WindowState* update(sf::RenderWindow &window, sf::Event& ev) override;

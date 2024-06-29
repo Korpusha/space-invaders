@@ -17,6 +17,15 @@ MenuWindowState::MenuWindowState()
     sf::FloatRect playTextRect = this->playText->getLocalBounds();
     this->playText->setOrigin(playTextRect.left + playTextRect.width / 2.f, playTextRect.top + playTextRect.height / 2.f);
 
+    this->scoreboardText = new sf::Text();
+    this->scoreboardText->setString("Scoreboard");
+    this->scoreboardText->setFont(*this->textFont);
+    this->scoreboardText->setCharacterSize(30);
+    this->scoreboardText->setFillColor(StaticManager::GREEN);
+
+    sf::FloatRect scoreboardTextRect = this->scoreboardText->getLocalBounds();
+    this->scoreboardText->setOrigin(scoreboardTextRect.left + scoreboardTextRect.width / 2.f, scoreboardTextRect.top + scoreboardTextRect.height / 2.f);
+
     this->creditsText = new sf::Text();
     this->creditsText->setString("Credits");
     this->creditsText->setFont(*this->textFont);
@@ -40,6 +49,7 @@ MenuWindowState::~MenuWindowState()
 {
     delete this->logoSprite;
     delete this->playText;
+    delete this->scoreboardText;
     delete this->creditsText;
     delete this->exitText;
 }
@@ -61,6 +71,10 @@ WindowState *MenuWindowState::update(sf::RenderWindow &window, sf::Event &ev)
 
         if (this->playText->getGlobalBounds().contains(mouseCoords)) {
             return new IntroWindowState();
+        }
+
+        if (this->scoreboardText->getGlobalBounds().contains(mouseCoords)) {
+            return new ViewScoreWindowState();
         }
 
         if (this->creditsText->getGlobalBounds().contains(mouseCoords)) {
@@ -85,7 +99,10 @@ void MenuWindowState::render(sf::RenderWindow &window)
     this->playText->setPosition((float) window.getSize().x / 2.f,(float) window.getSize().y / 2.25f);
     window.draw(*this->playText);
 
-    this->creditsText->setPosition((float) window.getSize().x / 2.f, (float) window.getSize().y / 2.f);
+    this->scoreboardText->setPosition((float) window.getSize().x / 2.f,(float) window.getSize().y / 2.f);
+    window.draw(*this->scoreboardText);
+
+    this->creditsText->setPosition((float) window.getSize().x / 2.f, (float) window.getSize().y / 1.75f);
     window.draw(*this->creditsText);
 
     this->exitText->setPosition((float) window.getSize().x / 2.f, (float) window.getSize().y / 1.25f);

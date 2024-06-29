@@ -3,7 +3,7 @@
 
 
 #include "WindowState.h"
-#include "ScoreWindowState.h"
+#include "FinalScoreWindowState.h"
 #include "Record.h"
 #include "Player.h"
 #include "EnemySpaceshipSquadron.h"

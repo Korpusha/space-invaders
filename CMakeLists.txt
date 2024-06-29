@@ -57,6 +57,10 @@ add_executable(main src/main.cpp
         src/models/headers/CreditsWindowState.h
         src/models/MenuWindowState.cpp
         src/models/headers/MenuWindowState.h
+        src/models/FinalScoreWindowState.cpp
+        src/models/headers/FinalScoreWindowState.h
+        src/models/ViewScoreWindowState.cpp
+        src/models/headers/ViewScoreWindowState.h
 )
 target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_17)

@@ -105,7 +105,8 @@ WindowState *GameWindowState::update(sf::RenderWindow &window, sf::Event &ev)
 
     this->player->getAllySpaceship()->update();
     if (this->enemySpaceshipSquadron->isDefeated() || !this->player->getAllySpaceship()->isAlive()) {
-        return new ScoreWindowState(this->player);
+        Record::appendToFile(*this->player->getRecord());
+        return new FinalScoreWindowState(*this->player->getRecord());
     }
     return nullptr;
 }

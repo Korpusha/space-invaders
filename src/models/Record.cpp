@@ -6,12 +6,12 @@ Record::Record(const std::string& name_, unsigned int value_)
     this->setValue(value_);
 }
 
-const std::string& Record::getName()
+const std::string& Record::getName() const
 {
     return this->name;
 }
 
-unsigned int Record::getValue()
+unsigned int Record::getValue() const
 {
     return this->value;
 }
@@ -88,7 +88,7 @@ std::ostream &operator<<(std::ostream &out, Record &record)
     return out;
 }
 
-bool Record::operator==(Record &record)
+bool Record::operator==(const Record &record) const
 {
     return record.getName() == this->getName() && record.getValue() == this->getValue();
 }

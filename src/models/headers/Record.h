@@ -24,14 +24,14 @@ public:
     void setName(const std::string& name_);
     void setValue(unsigned int value_);
 
-    const std::string& getName();
-    unsigned int getValue();
+    [[nodiscard]] const std::string& getName() const;
+    [[nodiscard]] unsigned int getValue() const;
 
     static std::vector<Record> loadFromFile();
     static void appendToFile(const Record& record);
 
     bool operator<(Record& record);
-    bool operator==(Record& record);
+    bool operator==(const Record& record) const;
     friend std::ofstream& operator<<(std::ofstream& fout, Record& record);
     friend std::ostream& operator<<(std::ostream& out, Record& record);
 };

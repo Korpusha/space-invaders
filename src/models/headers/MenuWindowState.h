@@ -5,6 +5,7 @@
 #include "SpriteEntity.h"
 #include "WindowState.h"
 #include "IntroWindowState.h"
+#include "ViewScoreWindowState.h"
 #include "CreditsWindowState.h"
 #include "EndScreenWindowState.h"
 
@@ -12,6 +13,7 @@ class MenuWindowState: public WindowState {
 private:
     SpriteEntity* logoSprite;
     sf::Text* playText;
+    sf::Text* scoreboardText;
     sf::Text* creditsText;
     sf::Text* exitText;
 public:
